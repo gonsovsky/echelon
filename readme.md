@@ -8,7 +8,7 @@ dep init
 
 (dep ensure -add google.golang.org/gRPC github.com/golang/protobuf/protoc-gen-go)
 
-./proto/gen.bat (.sh)
+./build/proto-gen.bat (.sh)
 
 
 Запуск:
