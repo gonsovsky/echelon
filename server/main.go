@@ -1,20 +1,19 @@
 package main
 
 import (
-	"echelon/internal/grpc/impl"
-	"echelon/internal/grpc/service"
+	"echelon/service"
 	"fmt"
+	"google.golang.org/grpc"
 	"log"
 	"net"
-	"google.golang.org/grpc"
 )
 
 func main() {
 	netListener := getNetListener(7000)
 	grpcServer := grpc.NewServer()
 
-	repositoryServiceImpl := impl.NewRepositoryServiceGrpcImpl()
-	service.RegisterRepositoryServiceServer(grpcServer, repositoryServiceImpl)
+	filterServiceImpl := service.NewFilterServiceGrpcImpl()
+	service.RegisterFilterServiceServer(grpcServer, filterServiceImpl)
 
 	// start the server
 	if err := grpcServer.Serve(netListener); err != nil {

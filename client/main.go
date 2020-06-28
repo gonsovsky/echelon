@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
+	"echelon/service"
 	"fmt"
 	"google.golang.org/grpc"
-	"echelon/internal/grpc/domain"
-	"echelon/internal/grpc/service"
+	"strconv"
 )
 
 func main() {
@@ -18,22 +18,26 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := service.NewRepositoryServiceClient(conn)
+	client := service.NewFilterServiceClient(conn)
 
 	for i := range [10]int{} {
-		repositoryModel := domain.Repository{
-			Id:        int64(i),
-			IsPrivate: true,
-			Name:      string("Grpc-Demo"),
-			UserId:    1245,
+		model := service.Record{
+			F: map[string]string{
+				"ValueA": strconv.Itoa(i),
+				"ValueB": strconv.Itoa(i),
+				"ValueC": strconv.Itoa(i),
+			},
+			S: &service.Input{
+				ValueA: strconv.Itoa(i),
+				ValueB: strconv.Itoa(i),
+				ValueC: strconv.Itoa(i),
+			},
 		}
 
-		if responseMessage, e := client.Add(context.Background(), &repositoryModel); e != nil {
-			panic(fmt.Sprintf("Was not able to insert Record %v", e))
+		if responseMessage, e := client.Add(context.Background(), &model); e != nil {
+			panic(fmt.Sprintf("Error: %v", e))
 		} else {
-			fmt.Println("Record Inserted..")
 			fmt.Println(responseMessage)
-			fmt.Println("=============================")
 		}
 	}
 }

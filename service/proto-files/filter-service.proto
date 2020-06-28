@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = "echelon/service";
+
+import "echelon/service/proto-files/record.proto";
+
+service FilterService {
+	rpc add (service.Record) returns (AddResponse);
+}
+
+message AddResponse {
+	bool result = 1;
+	service.Record Record = 2;
+}
