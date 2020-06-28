@@ -4,8 +4,8 @@
 package service
 
 import (
-	domain "bitbucket-repository-management-service/internal/grpc/domain"
 	context "context"
+	domain "echelon/internal/grpc/domain"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
